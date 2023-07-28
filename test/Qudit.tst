@@ -78,3 +78,13 @@ gap> ApplyQuditGateBetween(2, m_d3_1, 2, 3);
 Error, IsPowOf: gate must be or dimension d^k for some k.
 gap> ApplyQuditGateBetween(3, m_d2_1, 2, 3);
 Error, IsPowOf: gate must be or dimension d^k for some k.
+
+# AdjQuditSwap for the qubit and qutrit cases.
+gap> AdjQuditSwap( 2 );
+[ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 1 ] ]
+gap> AdjQuditSwap( 3 );
+[ [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], 
+  [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]

@@ -2,11 +2,32 @@
 #
 # QuditId( d )
 #
-# Returns the identity operator for a qudit. That is a d-by-d identity matrix
-# over the complex numbers
+# Returns the identity operator for a qudit. That is a d-by-d identity matrix.
 #
 QuditId := function( d )
     return IdentityMat( d );
+end;
+
+###############################################################################
+#
+# AdjQuditSwap( d )
+#
+# Returns the swap operator for adjacent qudits That is a (d^2)-by-(d^2)
+# permutation matrix.
+#
+AdjQuditSwap := function( d )
+    local M, i, j, s1, s2;
+    M := NullMat( d^2, d^2 );
+
+    for i in [1..d] do
+        for j in [1..d] do
+            s1 := (i - 1) * d + j;
+            s2 := (j - 1) * d + i;
+
+            M[s1, s2] := 1;
+        od;
+    od;
+    return M;
 end;
 
 ###############################################################################
