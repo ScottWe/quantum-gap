@@ -12,7 +12,7 @@ end;
 #
 # AdjQuditSwap( d )
 #
-# Returns the swap operator for adjacent qudits That is a (d^2)-by-(d^2)
+# Returns the swap operator for adjacent qudits. That is a (d^2)-by-(d^2)
 # permutation matrix.
 #
 AdjQuditSwap := function( d )
@@ -78,4 +78,51 @@ ApplyQuditGateBetween := function( d, G, n, m )
         G := KroneckerProduct( G, id );
     od;
     return G;
+end;
+
+###############################################################################
+#
+# QuditSwapAt( d, n, a, b )
+#
+# Returns the swap operator for arbitrary pairs of qudits at indices a and b in
+# an n qudit system. If a or b is larger than n, then an error is returned.
+QuditSwapAt := function( d, n, a, b )
+    local tmp, M, adjSwap, swap, i;
+
+    if n < 1 then
+        Error( "QuditSwapAt: qudit count (n) must be positive." );
+    elif a < 1 then
+        Error( "QuditSwapAt: index (a) must be positive." );
+    elif n < a then
+        Error( "QuditSwapAt: index (a) must be at most the qudit count." );
+    elif b < 1 then
+        Error( "QuditSwapAt: index (b) must be positive." );
+    elif n < b then
+        Error( "QuditSwapAt: index (b) must be at most the qudit count." );
+    elif d < 1 then
+        Error( "QuditSwapAt: dimension (d) must be positive." );
+    fi;
+
+    if b < a then
+        tmp := a;
+        a := b;
+        b := tmp;
+    fi;
+
+    M := IdentityMat( d^n );
+    if a = b then
+        return M;
+    fi;
+
+    adjSwap := AdjQuditSwap( d );
+    for i in [a..(b-1)] do
+        swap := ApplyQuditGateBetween( d, adjSwap, i - 1, n - i - 1 );
+        M := swap * M; 
+    od;
+    for i in Reversed( [a..(b-2)] ) do
+        swap := ApplyQuditGateBetween( d, adjSwap, i - 1, n - i - 1 );
+        M := swap * M;
+    od;
+
+    return M;
 end;
