@@ -791,3 +791,31 @@ gap> QuditSwapAt( 0, 3, 3, 2 );
 Error, QuditSwapAt: dimension (d) must be positive.
 gap> QuditSwapAt( 3, 0, 3, 2 );
 Error, QuditSwapAt: qudit count (n) must be positive.
+
+###############################################################################
+#
+# SwapAndApply Tests.
+#
+
+# Controlled Pauli-X example.
+gap> cx := [ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ] ];;
+gap> SwapAndApply( 2, 2, 1, 2, cx );
+[ [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ] ]
+
+# Three qubit example.
+gap> icx := ApplyQuditGateBetween( 2, cx, 1, 0 );;
+gap> SwapAndApply( 2, 3, 1, 2, icx );
+[ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ] ]
+
+# Qutrit example.
+gap> M1 := [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ];;
+gap> M2 := ApplyQuditGateBetween( 3, M1, 1, 0 );;
+gap> SwapAndApply( 3, 2, 1, 2, M2 );
+[ [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]

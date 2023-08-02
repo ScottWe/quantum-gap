@@ -86,6 +86,7 @@ end;
 #
 # Returns the swap operator for arbitrary pairs of qudits at indices a and b in
 # an n qudit system. If a or b is larger than n, then an error is returned.
+#
 QuditSwapAt := function( d, n, a, b )
     local tmp, M, adjSwap, swap, i;
 
@@ -125,4 +126,26 @@ QuditSwapAt := function( d, n, a, b )
     od;
 
     return M;
+end;
+
+###############################################################################
+#
+# SwapAndApply( d, n, a, b, M )
+#
+# Returns an application of the matrix M with qudits a and b swapped. The
+# result is the matrix obtained by conjugating M with QuditSwapAt( d, n, a, b).
+# If QuditSwapAt( d, n, a, b ) would return an error, then the same error is
+# returned. If M is not a valid n qudit operator, then an error is also
+# returned.
+#
+SwapAndApply := function( d, n, a, b, M )
+    local sz, swap;
+
+    sz := GetQuditGateSz( d, M );
+    if not sz = d^n then
+        Error( "SwapAndApply: M must be of dimension d^n." );
+    fi;
+
+    swap := QuditSwapAt( d, n, a, b );
+    return swap * M * swap;
 end;
