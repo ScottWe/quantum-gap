@@ -149,3 +149,26 @@ SwapAndApply := function( d, n, a, b, M )
     swap := QuditSwapAt( d, n, a, b );
     return swap * M * swap;
 end;
+
+#############################################################################
+#
+# SelfInvExp( d, M, a, b )
+#
+# Computes the matrix exponential exp(i*M*t) where M is self-inverse qudit
+# operator, a=cos(t), and b=sin(t). If M is not self-inverse or a^2 + b^2 = 1
+# does not hold, then an error is raised. Otherwise, aI + bM is returned.
+#
+SelfInvExp := function( d, M, a, b )
+    local sz, id;
+
+    sz := GetQuditGateSz( d, M );
+    id := IdentityMat( d );
+
+    if not M * M = id then
+        Error( "SelfInvExp: Matrix must be self-inverse." );
+    elif not a^2 + b^2 =1 then
+        Error( "SelfInvExp: the squares of a and b must sum to 1." );
+    fi;
+
+    return a * id + E(4) * b * M;
+end;
