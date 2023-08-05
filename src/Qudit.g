@@ -172,3 +172,27 @@ SelfInvExp := function( d, M, a, b )
 
     return a * id + E(4) * b * M;
 end;
+
+#############################################################################
+#
+# AssertAncilla( d, M, v )
+#
+# Converts the final qudit of M into an ancilla fixed to v. If M is not a qudit
+# matrix or n is not between 0 and (d - 1), then an error is raised.
+#
+AssertAncilla := function( d, M, v )
+    local sz, nsz, incl, proj, i, j;
+
+    sz   := GetQuditGateSz( d, M );
+    nsz  := sz / d;
+    proj := NullMat( nsz, sz );
+    incl := NullMat( sz, nsz );
+
+    for i in [1..nsz] do
+        j := 1 + (i - 1) * d + v;
+        incl[j][i] := 1;
+        proj[i][j] := 1;
+    od;
+
+    return proj * M * incl; 
+end;
