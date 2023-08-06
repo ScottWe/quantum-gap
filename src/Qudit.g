@@ -194,5 +194,43 @@ AssertAncilla := function( d, M, v )
         proj[i][j] := 1;
     od;
 
-    return proj * M * incl; 
+    return proj * M * incl;
+end;
+
+#############################################################################
+#
+# CheckAncilla( d, M, v )
+#
+# Checks if the final qudit of M can be interpreted as an ancilla both set
+# and terminated in state v. If the final qudit is not a valid ancilla, then
+# false is returned. If M is not a qudit matrix or n is not between 0 and
+# (d - 1), then an error is raised. Otherwise, nothing is returned.
+#
+CheckAncilla := function( d, M, v )
+    local sz, nsz, incl, i, j, k;
+
+    sz   := GetQuditGateSz( d, M );
+    nsz  := sz / d;
+    incl := NullMat( sz, nsz );
+
+    for i in [1..nsz] do
+        j := 1 + (i - 1) * d + v;
+        incl[j][i] := 1;
+    od;
+
+    M := M * incl;
+    k := 1 + v;
+    for i in [1..sz] do
+        if not i = k then
+            for j in [1..nsz] do
+                if not M[i][j] = 0 then
+                    return false;
+                fi;
+            od;
+        else
+            k := k + d;
+        fi;
+    od;
+
+    return true;
 end;

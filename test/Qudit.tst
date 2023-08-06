@@ -920,3 +920,89 @@ gap> AssertAncilla( 2, m_anc5, 0 );
 gap> AssertAncilla( 2, m_anc5, 1 );
 [ [ 12, 14, 16, 18 ], [ 32, 34, 36, 38 ], [ 52, 54, 56, 58 ], 
   [ 72, 74, 76, 78 ] ]
+
+#########################################################################################
+#
+# CheckAncilla Tests.
+#
+
+# Validating 2x2 ancilla usage.
+gap> m_anc6 := [ [ 1, 2 ], [ 3, 4 ] ];;
+gap> m_anc7 := [ [ 1, 2 ], [ 0, 4 ] ];;
+gap> m_anc8 := [ [ 1, 0 ], [ 3, 4 ] ];;
+gap> CheckAncilla( 2, m_anc6, 0 );
+false
+gap> CheckAncilla( 2, m_anc6, 1 );
+false
+gap> CheckAncilla( 2, m_anc7, 0 );
+true
+gap> CheckAncilla( 2, m_anc7, 1 );
+false
+gap> CheckAncilla( 2, m_anc8, 0 );
+false
+gap> CheckAncilla( 2, m_anc8, 1 );
+true
+
+# Validating 4x4 ancilla usage (Init0).
+gap> m_anc9  := [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 1, 2, 3 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc10 := [ [ 1, 2, 3, 4 ], [ 0, 6, 0, 8 ], [ 9, 1, 2, 3 ], [ 0, 5, 6, 7 ] ];;
+gap> m_anc11 := [ [ 1, 2, 3, 4 ], [ 0, 6, 0, 8 ], [ 9, 1, 2, 3 ], [ 4, 5, 0, 7 ] ];;
+gap> m_anc12 := [ [ 1, 2, 3, 4 ], [ 0, 6, 7, 8 ], [ 9, 1, 2, 3 ], [ 0, 5, 0, 7 ] ];;
+gap> m_anc13 := [ [ 1, 2, 3, 4 ], [ 5, 6, 0, 8 ], [ 9, 1, 2, 3 ], [ 0, 5, 0, 7 ] ];;
+gap> m_anc14 := [ [ 1, 2, 3, 4 ], [ 0, 6, 0, 8 ], [ 9, 1, 2, 3 ], [ 0, 5, 0, 7 ] ];;
+gap> CheckAncilla( 2, m_anc9, 0 );
+false
+gap> CheckAncilla( 2, m_anc10, 0 );
+false
+gap> CheckAncilla( 2, m_anc11, 0 );
+false
+gap> CheckAncilla( 2, m_anc12, 0 );
+false
+gap> CheckAncilla( 2, m_anc13, 0 );
+false
+gap> CheckAncilla( 2, m_anc14, 0 );
+true
+
+# Validating 4x4 ancilla usage (Init1).
+gap> m_anc15 := [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 1, 2, 3 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc16 := [ [ 1, 2, 3, 0 ], [ 5, 6, 7, 8 ], [ 9, 0, 2, 0 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc17 := [ [ 1, 0, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 0, 2, 0 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc18 := [ [ 1, 0, 3, 0 ], [ 5, 6, 7, 8 ], [ 9, 1, 2, 0 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc19 := [ [ 1, 0, 3, 0 ], [ 5, 6, 7, 8 ], [ 9, 0, 2, 3 ], [ 4, 5, 6, 7 ] ];;
+gap> m_anc20 := [ [ 1, 0, 3, 0 ], [ 5, 6, 7, 8 ], [ 9, 0, 2, 0 ], [ 4, 5, 6, 7 ] ];;
+gap> CheckAncilla( 2, m_anc15, 1 );
+false
+gap> CheckAncilla( 2, m_anc16, 1 );
+false
+gap> CheckAncilla( 2, m_anc17, 1 );
+false
+gap> CheckAncilla( 2, m_anc18, 1 );
+false
+gap> CheckAncilla( 2, m_anc19, 1 );
+false
+gap> CheckAncilla( 2, m_anc20, 1 );
+true
+
+# Validating 9x9 ancilla usage (Init1).
+gap> r_21_1  := [ 1, 0, 3, 4, 0, 6, 7, 0, 9 ];;
+gap> r_21_2  := [ 11, 12, 13, 14, 15, 16, 17, 18, 19 ];;
+gap> r_21_3  := [ 21, 0, 23, 24, 0, 26, 27, 0, 29 ];;
+gap> r_21_4  := [ 31, 0, 33, 34, 0, 36, 37, 0, 39 ];;
+gap> r_21_5  := [ 41, 42, 43, 44, 45, 46, 47, 48, 49 ];;
+gap> r_21_6  := [ 51, 0, 53, 54, 0, 56, 57, 0, 59 ];;
+gap> r_21_7  := [ 61, 0, 63, 64, 0, 66, 67, 0, 69 ];;
+gap> r_21_8  := [ 71, 72, 73, 74, 75, 76, 77, 78, 79 ];;
+gap> r_21_9  := [ 81, 0, 83, 84, 0, 86, 87, 0, 89 ];;
+gap> m_anc21 := [ r_21_1, r_21_2, r_21_3, r_21_4, r_21_5, r_21_6, r_21_7, r_21_8, r_21_9 ];;
+gap> CheckAncilla( 3, m_anc4, 0 );
+false
+gap> CheckAncilla( 3, m_anc4, 1 );
+false
+gap> CheckAncilla( 3, m_anc4, 2 );
+false
+gap> CheckAncilla( 3, m_anc21, 0 );
+false
+gap> CheckAncilla( 3, m_anc21, 1 );
+true
+gap> CheckAncilla( 3, m_anc21, 2 );
+false
