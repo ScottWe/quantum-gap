@@ -16,9 +16,9 @@ end;
 # qubit gate, then an error is raised by GetQuditGateSz.
 #
 AddQubitControl := function( G )
-    local sz, null, iden, blocks;
+    local sz, id;
     sz := GetQuditGateSz( 2, G );
 
-    blocks := [ [ 1, 1, IdentityMat( sz ) ], [ 2, 2, G ] ];
-    return MatrixByBlockMatrix( BlockMatrix( blocks, 2, 2 ) );
+    id := IdentityMat( sz );
+    return DirectSumMat( id, G );
 end;
