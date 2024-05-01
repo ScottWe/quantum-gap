@@ -20,15 +20,15 @@ gap> m_z     := [[1, 0], [0, -1]];;
 
 # GetQuditGateSz for valid powers of 2.
 gap> GetQuditGateSz(2, m_d2_1);
-2
+[ 2, 1 ]
 gap> GetQuditGateSz(2, m_d2_2);
-4
+[ 4, 2 ]
 
 # GetQuditGateSz for valid powers of 3.
 gap> GetQuditGateSz(3, m_d3_1);
-3
+[ 3, 1 ]
 gap> GetQuditGateSz(3, m_d3_2);
-9
+[ 9, 2 ]
 
 # GetQuditGateSz for invalid p.
 gap> GetQuditGateSz(2, m_d3_1);
@@ -802,12 +802,12 @@ Error, QuditSwapAt: qudit count (n) must be positive.
 
 # Controlled Pauli-X example.
 gap> cx := [ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ] ];;
-gap> SwapAndApply( 2, 2, 1, 2, cx );
+gap> SwapAndApply( 2, 1, 2, cx );
 [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ] ]
 
 # Three qubit example.
 gap> icx := ApplyQuditGateBetween( 2, cx, 1, 0 );;
-gap> SwapAndApply( 2, 3, 1, 2, icx );
+gap> SwapAndApply( 2, 1, 2, icx );
 [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], 
   [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0 ], 
   [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], 
@@ -816,7 +816,7 @@ gap> SwapAndApply( 2, 3, 1, 2, icx );
 # Qutrit example.
 gap> M1 := [ [ 0, 1, 0 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ];;
 gap> M2 := ApplyQuditGateBetween( 3, M1, 1, 0 );;
-gap> SwapAndApply( 3, 2, 1, 2, M2 );
+gap> SwapAndApply( 3, 1, 2, M2 );
 [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
   [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
   [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], 

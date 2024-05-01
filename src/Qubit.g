@@ -17,7 +17,7 @@ end;
 #
 AddQubitControl := function( G )
     local sz, id;
-    sz := GetQuditGateSz( 2, G );
+    sz := (GetQuditGateSz( 2, G ))[1];
 
     id := IdentityMat( sz );
     return DirectSumMat( id, G );

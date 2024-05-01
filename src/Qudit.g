@@ -35,19 +35,22 @@ end;
 # GetQuditGateSz( d, G )
 #
 # A qudit gate is a square matrix of size d^k for some positive integer k. This
-# function determines if G is a gate, and if so, then the dimension of G is
-# returned. Otherwise, an error is raised.
+# function determines if G is a gate, and if so, returns the corresponding d^k
+# and k as a two element list. Otherwise, an error is raised.
 #
 GetQuditGateSz := function( d, G )
-    local dim;
+    local dim, res;
     dim := DimensionsMat( G );
 
     if not dim[1] = dim[2] then
         Error( "GetQuditGateSz: gate must be square." );
-    elif not IsPowOf( d, dim[1] ) then
+    fi;
+
+    res := IsPowOf( d, dim[1] );
+    if res = [ ] then
         Error( "IsPowOf: gate must be or dimension d^k for some k." );
     fi;
-    return dim[1];
+    return [ dim[1], res[1] ];
 end;
 
 ###############################################################################
@@ -130,24 +133,21 @@ end;
 
 ###############################################################################
 #
-# SwapAndApply( d, n, a, b, M )
+# SwapAndApply( d, a, b, M )
 #
 # Returns an application of the matrix M with qudits a and b swapped. The
-# result is the matrix obtained by conjugating M with QuditSwapAt( d, n, a, b).
-# If QuditSwapAt( d, n, a, b ) would return an error, then the same error is
-# returned. If M is not a valid n qudit operator, then an error is also
-# returned.
+# result is the matrix obtained by conjugation with QuditSwapAt( d, n, a, b ),
+# where n is the number of qubits acted upon by M. If QuditSwapAt( d, n, a, b )
+# would return an error, then the same error is returned. If M is not a valid n
+# qudit operator, then an error is also returned.
 #
-SwapAndApply := function( d, n, a, b, M )
-    local sz, swap;
+SwapAndApply := function( d, a, b, M )
+    local n, swp;
 
-    sz := GetQuditGateSz( d, M );
-    if not sz = d^n then
-        Error( "SwapAndApply: M must be of dimension d^n." );
-    fi;
+    n   := (GetQuditGateSz( d, M ))[2];
+    swp := QuditSwapAt( d, n, a, b );
 
-    swap := QuditSwapAt( d, n, a, b );
-    return swap * M * swap;
+    return swp * M * swp;
 end;
 
 #############################################################################
@@ -161,8 +161,8 @@ end;
 SelfInvExp := function( d, M, a, b )
     local sz, id;
 
-    sz := GetQuditGateSz( d, M );
-    id := IdentityMat( d );
+    sz := (GetQuditGateSz( d, M ))[1];
+    id := IdentityMat( sz );
 
     if not M * M = id then
         Error( "SelfInvExp: Matrix must be self-inverse." );
@@ -183,7 +183,7 @@ end;
 AssertAncilla := function( d, M, v )
     local sz, nsz, incl, proj, i, j;
 
-    sz   := GetQuditGateSz( d, M );
+    sz   := (GetQuditGateSz( d, M ))[1];
     nsz  := sz / d;
     proj := NullMat( nsz, sz );
     incl := NullMat( sz, nsz );
@@ -209,7 +209,7 @@ end;
 CheckAncilla := function( d, M, v )
     local sz, nsz, incl, i, j, k;
 
-    sz   := GetQuditGateSz( d, M );
+    sz   := (GetQuditGateSz( d, M ))[1];
     nsz  := sz / d;
     incl := NullMat( sz, nsz );
 
