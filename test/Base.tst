@@ -1,5 +1,33 @@
 # Tests for src/Base.g functions.
 
+# GetPowFor for valid powers of 2.
+gap> GetPowFor( 2, 2 );
+[ 1 ]
+gap> GetPowFor( 2, 4 );
+[ 2 ]
+gap> GetPowFor( 2, 8 );
+[ 3 ]
+
+# GetPowFor for valid powers of 3.
+gap> GetPowFor( 3, 3 );
+[ 1 ]
+gap> GetPowFor( 3, 9 );
+[ 2 ]
+gap> GetPowFor( 3, 27 );
+[ 3 ]
+
+# GetPowFor for invalid powers of 2.
+gap> GetPowFor( 2, 1 );
+[  ]
+gap> GetPowFor( 2, 6 );
+[  ]
+
+# IsPowOf for invalid powers of 3.
+gap> GetPowFor( 3, 1 );
+[  ]
+gap> GetPowFor( 3, 6 );
+[  ]
+
 # IsPowOf for valid powers of 2.
 gap> IsPowOf( 2, 2 );
 true
