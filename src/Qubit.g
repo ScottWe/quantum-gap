@@ -22,3 +22,43 @@ AddQubitControl := function( G )
     id := IdentityMat( sz );
     return DirectSumMat( id, G );
 end;
+
+###############################################################################
+#
+# ApplyQubitGateBetween( G, n, m )
+#
+# See ApplyQuditGateBetween( 2, G, n, m ).
+#
+ApplyQubitGateBetween := function( G, n, m )
+    return ApplyQuditGateBetween( 2, G, n, m );
+end;
+
+###############################################################################
+#
+# QubitSwapAndApply( a, b, M )
+#
+# See SwapAndApply( 2, a, b, M ).
+#
+QubitSwapAndApply := function( a, b, M )
+    return SwapAndApply( 2, a, b, M );
+end;
+
+#############################################################################
+#
+# AssertQubitAncilla( M )
+#
+# See AssertAncilla( 2, M, 0 ).
+#
+AssertQubitAncilla := function( M )
+    return AssertAncilla( 2, M, 0 );
+end;
+
+#############################################################################
+#
+# CheckQubitAncilla( M )
+#
+# See CheckAncilla( 2, M, 0 ).
+#
+CheckQubitAncilla := function( M )
+    return CheckAncilla( 2, M, 0 );
+end;

@@ -55,7 +55,7 @@ end;
 
 ###############################################################################
 #
-# ApplyQuditGateAt( d, G, n, m )
+# ApplyQuditGateBetween( d, G, n, m )
 #
 # If G is a qudit gate of dimension d^k with n and m non-negative integers,
 # then returns qudit gate that applies M to the n-th qudit throguh to the
@@ -68,9 +68,9 @@ ApplyQuditGateBetween := function( d, G, n, m )
 
     GetQuditGateSz( d, G );
     if n < 0 then
-        Error( "ApplyQuditGateAt: qudit count (n) must be non-negative." );
+        Error( "ApplyQuditGateBetween: qudit count (n) must be non-negative." );
     elif m < 0 then
-        Error( "ApplyQuditGateAt: qudit count (m) must be non-negative." );
+        Error( "ApplyQuditGateBetween: qudit count (m) must be non-negative." );
     fi;
 
     id := QuditId( d );
@@ -177,8 +177,8 @@ end;
 #
 # AssertAncilla( d, M, v )
 #
-# Converts the final qudit of M into an ancilla fixed to v. If M is not a qudit
-# matrix or n is not between 0 and (d - 1), then an error is raised.
+# Converts the final qudit of M into an ancilla fixed to v. If M is not a
+# qudit matrix or n is not between 0 and (d - 1), then an error is raised.
 #
 AssertAncilla := function( d, M, v )
     local sz, nsz, incl, proj, i, j;
