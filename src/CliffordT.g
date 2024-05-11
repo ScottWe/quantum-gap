@@ -54,3 +54,4 @@ m_cz    := AddQubitControl( m_z );
 m_ch    := AddQubitControl( m_h );
 m_cswap := AddQubitControl( m_swap );
 m_ccx   := AddQubitControl( m_cx );
+m_ccz   := AddQubitControl( m_cz );
